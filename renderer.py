@@ -1,7 +1,8 @@
 import argparse
-import json
+import zlib
 
 import cv2 as cv
+import msgpack
 import numpy as np
 
 parser = argparse.ArgumentParser()
@@ -47,5 +48,6 @@ for _ in range(frame_count):
     frames.append(res)
 cap.release()
 
-with open(args.output, "w") as f:
-    json.dump({"fps": fps, "frames": frames}, f)
+
+with open(args.output, "wb") as f:
+    f.write(zlib.compress(msgpack.packb({"fps": fps, "frames": frames})))

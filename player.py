@@ -1,20 +1,16 @@
 import argparse
 import curses
-import json
 import time
+import zlib
+
+import msgpack
 
 parser = argparse.ArgumentParser()
-parser.add_argument(
-    "-f",
-    "--filename",
-    help="input filename",
-    type=str,
-    required=True
-)
+parser.add_argument("-f", "--filename", help="input filename", type=str, required=True)
 args = parser.parse_args()
 
-with open(args.filename, "r") as f:
-    data = json.load(f)
+with open(args.filename, "rb") as f:
+    data = msgpack.unpackb(zlib.decompress(f.read()))
 
 sleep_time = 1 / data["fps"]
 frames = data["frames"]
@@ -33,4 +29,4 @@ for frame in frames:
     stdscr.refresh()
 
     time.sleep(sleep_time)
-curses.endwin()
+    curses.endwin()
