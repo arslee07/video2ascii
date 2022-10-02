@@ -22,13 +22,15 @@ frames = data["frames"]
 w, h = len(frames[0][0]), len(frames[0])
 
 stdscr = curses.initscr()
-try:
-    stdscr.resize(h, w * 2)
-    for frame in frames:
+stdscr.resize(h, w * 2)
+for frame in frames:
+    try:
         for pos, line in enumerate(frame):
             stdscr.addstr(pos, 0, " ".join(line))
-        stdscr.refresh()
+    except Exception:
+        pass
 
-        time.sleep(sleep_time)
-finally:
-    curses.endwin()
+    stdscr.refresh()
+
+    time.sleep(sleep_time)
+curses.endwin()
