@@ -19,12 +19,7 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-filename = args.filename
-size = tuple(map(int, args.size.split("x")))
-output = args.output
-pixels = args.pixels
-
-cap = cv.VideoCapture(filename)
+cap = cv.VideoCapture(args.filename)
 fps = int(cap.get(cv.CAP_PROP_FPS))
 frame_count = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
 
@@ -32,23 +27,25 @@ frames = []
 for _ in range(frame_count):
     _, raw_frame = cap.read()
     frame = cv.cvtColor(raw_frame, cv.COLOR_BGR2GRAY)
-    frame = cv.resize(frame, size, interpolation=cv.INTER_AREA)
+    frame = cv.resize(
+        frame, tuple(map(int, args.size.split("x"))), interpolation=cv.INTER_AREA
+    )
 
     res = []
 
     percents = frame / 255
-    indexes = (percents * (len(pixels) - 1)).astype(np.int64)
+    indexes = (percents * (len(args.pixels) - 1)).astype(np.int64)
 
     h, w = frame.shape
 
     for i in range(h):
         row = ""
         for j in range(w):
-            row += pixels[indexes[i][j]]
+            row += args.pixels[indexes[i][j]]
         res.append(row)
 
     frames.append(res)
 cap.release()
 
-with open(output, "w") as f:
+with open(args.output, "w") as f:
     json.dump({"fps": fps, "frames": frames}, f)
