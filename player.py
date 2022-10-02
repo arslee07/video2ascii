@@ -19,14 +19,19 @@ w, h = len(frames[0][0]), len(frames[0])
 
 stdscr = curses.initscr()
 stdscr.resize(h, w * 2)
-for frame in frames:
-    try:
-        for pos, line in enumerate(frame):
-            stdscr.addstr(pos, 0, " ".join(line))
-    except Exception:
-        pass
 
-    stdscr.refresh()
+try:
+    for frame in frames:
+        try:
+            for pos, line in enumerate(frame):
+                stdscr.addstr(pos, 0, " ".join(line))
+        except Exception:
+            pass
 
-    time.sleep(sleep_time)
+        stdscr.refresh()
+
+        time.sleep(sleep_time)
+except KeyboardInterrupt:
+    pass
+finally:
     curses.endwin()
