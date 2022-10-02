@@ -5,7 +5,7 @@ import cv2 as cv
 import numpy as np
 
 parser = argparse.ArgumentParser()
-parser.add_argument(dest="filename", help="input filename", type=str)
+parser.add_argument("-f", "--filename", help="input filename", type=str, required=True)
 parser.add_argument(
     "-p",
     "--pixels",
@@ -13,13 +13,7 @@ parser.add_argument(
     type=str,
     default=" .'`^\",:;Il!i><~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$",
 )
-parser.add_argument(
-    "-o",
-    "--output",
-    help="output filename",
-    type=str,
-    required=True
-)
+parser.add_argument("-o", "--output", help="output filename", type=str, required=True)
 parser.add_argument(
     "-s", "--size", help="Output animation size (e.g. 80x60)", type=str, required=True
 )

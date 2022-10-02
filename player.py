@@ -5,9 +5,11 @@ import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    dest="filename",
+    "-f",
+    "--filename",
     help="input filename",
     type=str,
+    required=True
 )
 args = parser.parse_args()
 
