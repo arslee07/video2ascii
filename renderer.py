@@ -58,5 +58,3 @@ cap.release()
 
 with open(output, "w") as f:
     json.dump({"fps": fps, "frames": frames}, f)
-with open(output, "w") as f:
-    json.dump({"fps": fps, "frames": frames}, f)
