@@ -22,12 +22,11 @@ frames = data["frames"]
 w, h = len(frames[0][0]), len(frames[0])
 
 stdscr = curses.initscr()
-curses.start_color()
 try:
     stdscr.resize(h, w * 2)
     for frame in frames:
         for pos, line in enumerate(frame):
-            stdscr.addstr(pos, 0, " ".join(line), curses.COLOR_WHITE)
+            stdscr.addstr(pos, 0, " ".join(line))
         stdscr.refresh()
 
         time.sleep(sleep_time)
